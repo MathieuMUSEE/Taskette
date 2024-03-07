@@ -1,0 +1,119 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: 'Task API'
+  description: 'API for managing tasks'
+host: 'localhost:3000'
+basePath: '/'
+schemes:
+  - 'http'
+paths:
+  /tasks/{id}:
+    get:
+      summary: 'Recupere une tache precise'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          type: 'string'
+          description: 'ID of the task to retrieve'
+      responses:
+        '200':
+          description: 'Task retrieved successfully'
+        '400':
+          description: 'Bad request, invalid task id'
+        '500':
+          description: 'Server error'
+    delete:
+      summary: 'Supprime une tache precise'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          type: 'string'
+          description: 'ID of the task to delete'
+      responses:
+        '200':
+          description: 'Task deleted successfully'
+        '400':
+          description: 'Bad request, invalid task id'
+        '500':
+          description: 'Server error'
+    put:
+      summary: 'Met a jour une tache précise'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          type: 'string'
+          description: 'ID of the task to update'
+        - in: 'body'
+          name: 'task'
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        '200':
+          description: 'Task updated successfully'
+        '400':
+          description: 'Bad request, invalid task id or body'
+        '500':
+          description: 'Server error'
+    patch:
+      summary: 'Marque une tache comme complète'
+      parameters:
+        - in: 'path'
+          name: 'id'
+          required: true
+          type: 'string'
+          description: 'ID of the task to partially update'
+        - in: 'body'
+          name: 'task'
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        '200':
+          description: 'Task partially updated successfully'
+        '400':
+          description: 'Bad request, invalid task id or body'
+        '500':
+          description: 'Server error'
+  /tasks:
+    get:
+      summary: 'Recupere toutes les taches'
+      responses:
+        '200':
+          description: 'Taches recuperees'
+        '500':
+          description: 'Server error'
+    post:
+      summary: 'Créé une nouvelle tache'
+      parameters:
+        - in: 'body'
+          name: 'task'
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        '201':
+          description: 'Tache créée'
+        '400':
+          description: 'Bad request, invalid task body'
+        '500':
+          description: 'Server error'
+    delete:
+      summary: 'Delete all tasks'
+      responses:
+        '200':
+          description: 'Taches suprimees'
+        '500':
+          description: 'Server error'
+definitions:
+  Task:
+    type: 'object'
+    properties:
+      name:
+        type: 'string'
+      state:
+        type: 'string'
